@@ -5,10 +5,14 @@ This is my first attempt at creating a Python Module and is intended to assist w
 
 This have been inspired and influenced by https://github.com/hpreston/cisco_cloud. I initially intended to contribte to Hanks good work however as a learning exercise I wanted to create my own module and learn how to use unit testing for it.
 
+Once you have pulled the module down you should browse into the directory and execute;
 
+    python setup.py install
 
 
 To use (with caution), simply do::
 
     >>> import cecs
     >>> print cecs.joke()
+
+I will at some stage (once it is in a useful state) publish on PyPI to allow much easier instalation.
