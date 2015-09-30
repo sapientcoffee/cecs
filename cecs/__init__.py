@@ -1,4 +1,16 @@
+#! /usr/bin/env python
 
+#==============================================================================
+# Title:                cecs
+# Description:          This is a module to assist with the interaction both the
+#                       UCSD & ICFB APIs for other Pyton scripts.
+#
+# Author:          		Rob Edwards (robedwa)
+# Date:                 30/09/15
+# Version:              0.1.10
+# Dependencies:
+# Limitations/issues:   Early days of the module
+#==============================================================================
 '''
     Python module of different functions for manipulating UCS Director
     via the API.
@@ -10,8 +22,11 @@ from markdown import markdown
 from pprint import pprint
 
 # import standard variables and configuration info
-from local_config import ucsdserver, ucsd_key, url, getstring, parameter_lead, headers, icfdserver, icfd_key
-headers["X-Cloupia-Request-Key"] = ucsd_key
+from local_config import ucsdserver, ucsd_key, url, getstring, parameter_lead, headers, icfbserver, icfb_key
+# headers["X-Cloupia-Request-Key"] = ucsd_key
+
+# Being lazy and avoiding checking the SSL cert and as a result want to hide the erros associated :)
+requests.packages.urllib3.disable_warnings()
 
 #################### Core Functions ############################################
 #    Python module of different functions for working with data.
@@ -53,13 +68,15 @@ headers["X-Cloupia-Request-Key"] = ucsd_key
 
 def ucsdCall(api, param0 = None, param1 = None, param2 = None, param3 = None):
     '''
+    NOTE: This is deprecated and will be removed once all functions have been migrated!
+
     Craetes the URL format to make the call to UCS Director Rest API.
     This is a hacked version of overloading (not sure how else to achieve)
     :param api: The specific API call required
     :param param0: The initial parameter required to create the request structure
     :return: JSON response (in Python dictionary) from API call
     '''
-
+    headers["X-Cloupia-Request-Key"] = ucsd_key
     if param0 is None:
         u = url % (ucsdserver) + getstring % (api) + parameter_lead + \
         "{}"
@@ -78,9 +95,9 @@ def ucsdCall(api, param0 = None, param1 = None, param2 = None, param3 = None):
 
     r = requests.get(u, headers=headers)
     j = json.loads(r.text)
-    return j
+    return r
 
-def apiCall(api, param0 = None, param1 = None, param2 = None, param3 = None):
+def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None):
     '''
     Craetes the URL format to make the call to UCS Director or Intercloud Fabric
     Rest API. This is a hacked way to achieve overloading
@@ -91,24 +108,35 @@ def apiCall(api, param0 = None, param1 = None, param2 = None, param3 = None):
     :return: JSON response from API call
     '''
 
+    if env == 'icfb':
+        headers["X-Cloupia-Request-Key"] = icfb_key
+        server = icfbserver
+    elif env == 'ucsd':
+        headers["X-Cloupia-Request-Key"] = ucsd_key
+        server = ucsdserver
+
     if param0 is None:
-        u = url % (ucsdserver) + getstring % (api) + parameter_lead + \
+        u = url % (server) + getstring % (api) + parameter_lead + \
         "{}"
     elif param1 is None:
-        u = url % (ucsdserver) + getstring % (api) + parameter_lead + \
+        u = url % (server) + getstring % (api) + parameter_lead + \
         "{param0:\"" + param0 + '"' + '}'
     elif param2 is None:
-        u = url % (ucsdserver) + getstring % (api) + parameter_lead + \
+        u = url % (server) + getstring % (api) + parameter_lead + \
         "{param0:\"" + param0 + '",' + \
         ',param1:"' + param1 + '"}'
     elif param3 is None:
-        u = url % (ucsdserver) + getstring % (api) + parameter_lead + \
+        u = url % (server) + getstring % (api) + parameter_lead + \
         "{param0:\"" + param0 + '",' + \
         'param1:"' + param1 + '"' + \
         ',param2:"' + param2 + '"}'
 
-    r = requests.get(u, headers=headers)
-    return r
+    # Due to the setup of the lab I have disabled the SSL cert verification however
+    # in a production environemnt I would sugest changing verify to True so that the
+    # SSL certs are validated!!
+    r = requests.get(u, headers=headers, verify=False)
+    j = json.loads(r.text)
+    return j
 
 #################### VM Operations #############################################
 #L G UserAPIProvisionRequest                Provisions a virtual machine (VM).
@@ -298,7 +326,8 @@ def sr_get():
     :return: APITabularReport (JSON)
     '''
     apioperation = "userAPIGetServiceRequests"
-    r = ucsdCall(apioperation)
+    r = apiCall("ucsd", apioperation)
+    #j = json.loads(r.text)
     return r
 
 def sr_details(srnumber):
@@ -385,18 +414,22 @@ def report_tabular(group, report):
 #                   WORKING ON
 ################################################################################
 
-def getAllVMs():
+def getAllVMs(env):
 
-    # if system == "ucsd":
-    #     apioperation = "userAPIGetAllVMs"
-    # elif system == "icfb":
-    #     apioperation = "Intercloud:userAPIGetAllVMs"
+    if env == "ucsd":
+        apioperation = "userAPIGetAllVMs"
+    elif env == "icfb":
+        apioperation = "Intercloud:userAPIGetAllVms"
 
-    apioperation = "userAPIGetAllVMs"
-    r = apiCall(apioperation)
-    j = json.loads(r.text)
+    #apioperation = "Intercloud:userAPIGetAllVMs"
+    #apioperation = "userAPIGetAllVMs"
+    #env = "ucsd"
 
-    return j
+    r = apiCall(env, apioperation)
+    #r = ucsdCall(apioperation)
+    #j = json.loads(r.text)
+
+    return r
 
 
 
@@ -408,11 +441,12 @@ def VMNameToID(vm_name):
     :param: VM_Name
     :return: vmid
     '''
-    apioperation = "userAPIGetAllVMs"
-    r = apiCall(apioperation)
-    j = json.loads(r.text)
+    apioperation = "Intercloud:userAPIGetAllVMs"
+    env = "icfb"
+    r = apiCall(env, apioperation)
+    #j = json.loads(r.text)
 
-    all_vms = j['serviceResult']['rows']
+    all_vms = r['serviceResult']['rows']
     for vm in all_vms:
         if (vm['VM_Name'] == vm_name):
             vmid = vm['VM_ID']
@@ -479,5 +513,6 @@ def vm_action(vm_name, action, comment):
         r = "Error, VM not found"
 
     print "About to " + action + " the VM '" + vm_name + "' with VM_ID '" +str(vmid)+ "' ."
-    r = apiCall(apioperation, str(vmid), action, comment)
+    env = "ucsd"
+    r = apiCall(env, apioperation, str(vmid), action, comment)
     return r

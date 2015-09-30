@@ -88,80 +88,115 @@ DEFAULT = '\033[39m'
 ### SR Testing testing
 ##
 
-pprint(cecs.sr_get())
-
-srnumber = "467"
-pprint(cecs.sr_details(srnumber))
-
-pprint(cecs.sr_log(srnumber, ""))
+# pprint(cecs.sr_get())
+#
+# srnumber = "467"
+# pprint(cecs.sr_details(srnumber))
+#
+# pprint(cecs.sr_log(srnumber, ""))
 
 ##
 ###
 ##
 
-pprint(cecs.group_name('Demo'))
+# pprint(cecs.group_name('Demo'))
 
 ##
 ### Get all VMs and put in a table (including colours for the power status)
-##
-j = cecs.getAllVMs()
-all_vms = j['serviceResult']['rows']
 
-table = PrettyTable(["ID", "Name", "IP Address(s)", "Power", "VDC"])
-table.align["Name"] = "l" # Left align
-table.padding_width = 1 # One space between column edges and contents (default)
+def list_vms(env):
+    j = cecs.getAllVMs(env)
+    all_vms = j['serviceResult']['rows']
 
-for item in all_vms:
-    a = item["VM_ID"]
-    b = item["VM_Name"]
-    c = item["IP_Address"]
-    if item["Power_State"] == "ON":
-        d = GREEN + item["Power_State"] + DEFAULT
-    elif item["Power_State"] == "OFF":
-        d = RED + item["Power_State"] + DEFAULT
-    else:
-        d = BLUE + item["Power_State"] + DEFAULT
-    e = item["vDC"]
+    table = PrettyTable(["ID", "Name", "IP Address(s)", "Power", "VDC"])
+    table.align["Name"] = "l" # Left align
+    table.padding_width = 1 # One space between column edges and contents (default)
 
-    table.add_row([a, b, c, d, e])
+    for item in all_vms:
+        # Values that are the same for UCSD & ICFB responses
+        a = item["VM_ID"]
+        if item["Power_State"] == "ON":
+            d = GREEN + item["Power_State"] + DEFAULT
+        elif item["Power_State"] == "OFF":
+            d = RED + item["Power_State"] + DEFAULT
+        else:
+            d = BLUE + item["Power_State"] + DEFAULT
+        e = item["vDC"]
 
-print(table)
+        # Values that differ between UCSD & ICFB
+        if env == "ucsd":
+            b = item["VM_Name"]
+            c = item["IP_Address"]
+        elif env == "icfb":
+            b = item["Instance_ID"]
+            c = item["Enterprise_IP"]
+
+        table.add_row([a, b, c, d, e])
+    return table
+
+
+print(list_vms("icfb"))
+print(list_vms("ucsd"))
+
+
+
+
+#print(table)
+
+                              #
+                            #   {u'Category': u'App Category 0',
+                            #    u'Cloud': u'prov2',
+                            #    u'Description': u' ',
+                            #    u'Domain_Name': u'cisco.com',
+                            #    u'Enterprise_IP': u'10.10.20.189 ',
+                            #    u'Image_Id': u'',
+                            #    u'Instance_ID': u'EILPC7ICF',
+                            #    u'OS': u'RHEL 6.2 (64bit)',
+                            #    u'Power_State': u'ON',
+                            #    u'Provider_IP': u'N/A',
+                            #    u'Tunnel_Status': u'up',
+                            #    u'VM_ID': 207,
+                            #    u'VM_Label': u'',
+                            #    u'vDC': u'CiscoCloudVDC'}]}}
+
+
+
 
 ##
 ### Service Request Related
 ## Get all service requests
 
-sr = cecs.sr_get()
-all_sr = sr['serviceResult']['rows']
-
-srtable = PrettyTable(["ID", "Workflow", "Group/User", "Time", "Status"])
-srtable.align["ID"] = "l" # Left align
-srtable.padding_width = 1 # One space between column edges and contents (default)
-
-for item in all_sr:
-    a = item["Service_Request_Id"]
-    b = item["Catalog_Workflow_Name"]
-    if item["Group"] == "":
-        c = item["Initiating_User"]
-    else:
-        c = item["Group"] + "/" + item["Initiating_User"]
-    d = item["Request_Time"]
-    if item["Request_Status"] == "Complete":
-        e = GREEN + item["Request_Status"] + DEFAULT
-    elif item["Request_Status"] == "Failed":
-        e = RED + item["Request_Status"] + DEFAULT
-    else:
-        e = BLUE + item["Request_Status"] + DEFAULT
-
-    srtable.add_row([a, b, c, d, e])
-
-print(srtable)
+# sr = cecs.sr_get()
+# all_sr = sr['serviceResult']['rows']
+#
+# srtable = PrettyTable(["ID", "Workflow", "Group/User", "Time", "Status"])
+# srtable.align["ID"] = "l" # Left align
+# srtable.padding_width = 1 # One space between column edges and contents (default)
+#
+# for item in all_sr:
+#     a = item["Service_Request_Id"]
+#     b = item["Catalog_Workflow_Name"]
+#     if item["Group"] == "":
+#         c = item["Initiating_User"]
+#     else:
+#         c = item["Group"] + "/" + item["Initiating_User"]
+#     d = item["Request_Time"]
+#     if item["Request_Status"] == "Complete":
+#         e = GREEN + item["Request_Status"] + DEFAULT
+#     elif item["Request_Status"] == "Failed":
+#         e = RED + item["Request_Status"] + DEFAULT
+#     else:
+#         e = BLUE + item["Request_Status"] + DEFAULT
+#
+#     srtable.add_row([a, b, c, d, e])
+#
+# print(srtable)
 
 ## Get service requests details
 
-srdet = cecs.sr_details("476")
-
-pprint(srdet)
+# srdet = cecs.sr_details("476")
+#
+# pprint(srdet)
 
 # stepId
 # executionStatus (colour code stepId)
