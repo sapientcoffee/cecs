@@ -24,7 +24,7 @@ The module is most defiantly work in progress, the following functions are worki
 | ------------- |:-------------:|
 | getAllVMs      | Gets a list of all VMs for the user |
 | sr_get      | Gets a list of all the service requests       |  
-|  |       |    
+|   |       |    
 
 
 
