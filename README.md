@@ -1,5 +1,4 @@
-CECS
---------
+# CECS
 
 This is my first attempt at creating a Python Module and is intended to assist with using the Cisco Enterprise Cloud Suite APIs. The initial work will be around UCS Director.
 
@@ -13,7 +12,7 @@ Once you have pulled the module down you should browse into the directory and ex
 To use (with caution), simply do::
 
     >>> import cecs
-    >>> print cecs.getSR()
+    >>> print cecs.getsr()
 
 I will at some stage (once it is in a useful state) publish on PyPI to allow much easier installation.
 
@@ -26,3 +25,7 @@ The modules is most defiantly work in progress, the following functions are work
 | col 3 is      | right-aligned | $1600 |
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
+
+
+
+### Example Scripts

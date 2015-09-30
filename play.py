@@ -2,7 +2,7 @@
 
 #==============================================================================
 # Title:
-# Description:
+# Description:          This is just a file I use for testing fuctions
 #
 # Author:          		Rob Edwards (robedwa)
 # Date:
