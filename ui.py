@@ -1,0 +1,187 @@
+#!/usr/bin/env python
+
+#===============================================================================
+# Title:                ui.py
+# Description:          This is a menu based CLI tool using the UCSD/ICFD API.
+#
+# Author:          		Rob Edwards (robedwa)
+# Date Updated:         30th September 2015
+# Version:              0.5
+# Dependencies:
+# Limitations/issues:
+#===============================================================================
+
+import sys, os
+import json
+import cecs
+from prettytable import PrettyTable
+from pprint import pprint
+
+# Main definition - constants
+main_menu_actions  = {}
+
+# =======================
+#     MENUS FUNCTIONS
+# =======================
+def common_options():
+    print "m. Main"
+    print "q. Quit"
+    choice = raw_input(" Option >>  ")
+    main_exec_menu(choice)
+    return
+
+def main_menu():
+    os.system('clear')
+    print "Welcome, this is an example of using the API for UCS Director and Intercloud Fabric Director\n"
+    print "Please choose the menu you want to start:"
+    print "1. Catalog Items"
+    print "2. Service Requests"
+    #print "3. Infrastructure"
+    #print "4. Consuption"
+    print "\nq. Quit"
+    choice = raw_input(" >>  ")
+    main_exec_menu(choice)
+    return
+
+# Catalog Menu
+def catalog_menu():
+    print("Catalog Menu!\n")
+    common_options()
+    #print "b. Back"
+    #print "q. Quit"
+    #choice = raw_input(" Catalog >>  ")
+    #exec_menu(choice)
+    #return
+
+
+# Service Request Menu
+def requests_menu():
+    print "Requests Menu!\n"
+    print "1. List all service requests"
+    # print "b. Back"
+    # print "q. Quit"
+    # choice = raw_input(" Requests >>  ")
+    # requests_exec_menu(choice)
+    common_options()
+    #return
+
+def request_list():
+    print("All Service Requests!\n")
+    # sr = cecs.sr_get()
+    # print(sr)
+    sr = cecs.sr_get()
+    all_sr = sr['serviceResult']['rows']
+
+    srtable = PrettyTable(["ID", "Workflow", "Group/User", "Time", "Status"])
+    srtable.align["ID"] = "l" # Left align
+    srtable.padding_width = 1 # One space between column edges and contents (default)
+
+    for item in all_sr:
+        a = item["Service_Request_Id"]
+        b = item["Catalog_Workflow_Name"]
+        if item["Group"] == "":
+            c = item["Initiating_User"]
+        else:
+            c = item["Group"] + "/" + item["Initiating_User"]
+        d = item["Request_Time"]
+        if item["Request_Status"] == "Complete":
+            e = GREEN + item["Request_Status"] + DEFAULT
+        elif item["Request_Status"] == "Failed":
+            e = RED + item["Request_Status"] + DEFAULT
+        else:
+            e = BLUE + item["Request_Status"] + DEFAULT
+
+        srtable.add_row([a, b, c, d, e])
+
+    print(srtable)
+    common_options()
+    # choice = raw_input(" Requests >>  ")
+    # requests_exec_menu(choice)
+    # return
+
+#Infrastructure Menu
+def infrastructure_menu():
+    print "Infrastructure Menu!\n"
+    # print "m. Main Menu"
+    # print "q. Quit"
+    # choice = raw_input(" Infrastructure >>  ")
+    # exec_menu(choice)
+    common_options()
+    #return
+
+#Consuption/Billing Menu
+def consumption_menu():
+    print "Consuption Menu!\n"
+    # print "b. Back"
+    # print "q. Quit"
+    # choice = raw_input(" Consumption >>  ")
+    # exec_menu(choice)
+    common_options()
+    #return
+
+# Back to main menu
+# def back():
+#     main_menu_actions['main_menu']()
+
+# Exit program
+def exit():
+    print("Thank you for using, have a nice day!")
+    sys.exit()
+
+# ------------------------------------------------------------------------------
+# Execute menu
+def main_exec_menu(choice):
+    os.system('clear')
+    ch = choice.lower()
+    if ch == '':
+        main_menu_actions['main_menu']()
+    else:
+        try:
+            main_menu_actions[ch]()
+        except KeyError:
+            print "Invalid selection, please try again.\n"
+            main_menu_actions['main_menu']()
+    return
+
+def requests_exec_menu(choice):
+        os.system('clear')
+        ch = choice.lower()
+        if ch == '':
+            requests_menu_actions['main_menu']()
+        else:
+            try:
+                requests_menu_actions[ch]()
+            except KeyError:
+                print "Invalid selection, please try again.\n"
+                requests_menu_actions['main_menu']()
+        return
+
+# =======================
+#    MENUS DEFINITIONS
+# =======================
+
+# Menu definition
+main_menu_actions = {
+    'main_menu': main_menu,
+    '1': catalog_menu,
+    '2': requests_menu,
+    '3': infrastructure_menu,
+    'm': main_menu,
+    'q': exit,
+}
+
+requests_menu_actions = {
+    'main_menu': requests_menu,
+    '1': request_list,
+    'm': main_menu,
+    'q': exit,
+}
+
+# =======================
+#      MAIN PROGRAM
+# =======================
+
+# Main Program
+if __name__ == "__main__":
+    # Launch main menu
+    main_menu()
