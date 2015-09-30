@@ -18,14 +18,18 @@ I will at some stage (once it is in a useful state) publish on PyPI to allow muc
 
 
 ### Working Functions
-The modules is most defiantly work in progress, the following functions are working;
+The module is most defiantly work in progress, the following functions are working (these are only the ones that I think are useful rather than all in the module);
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| Fuctions        | Purpose     |
+| ------------- |:-------------:|
+| getAllVMs      | Gets a list of all VMs for the user |
+| sr_get      | Gets a list of all the service requests       |  
+|  |       |    
 
 
 
 ### Example Scripts
+Examples that have been created using the module are the following.
+
+#### ui.py
+This script provides a text base menu to do display various things. The menu should be self explanatory.
