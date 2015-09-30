@@ -69,7 +69,8 @@ def catalog_menu():
 #################### Service Request Menu ######################################
 def requests_menu():
     print "Requests Menu!\n"
-    print "1. List all service requests"
+    print "1. List all UCSD service requests"
+    print "2. List all ICFB service requests"
     print "\nm. Main Menu"
     print "q. Quit"
     choice = raw_input(" Requests >>  ")
@@ -77,11 +78,11 @@ def requests_menu():
     #common_options()
     return
 
-def request_list():
+def request_list(env):
     print("All Service Requests!\n")
     # sr = cecs.sr_get()
     # print(sr)
-    sr = cecs.sr_get()
+    sr = cecs.sr_get(env)
     all_sr = sr['serviceResult']['rows']
 
     srtable = PrettyTable(["ID", "Workflow", "Group/User", "Time", "Status"])
@@ -114,6 +115,26 @@ def request_list():
     # choice = raw_input(" Requests >>  ")
     # requests_exec_menu(choice)
     # return
+
+def request_list_ucsd():
+    print("Obtaining requested data (this may take a minute) .............")
+    print("Please hold the line caller you are important to us.")
+    print(request_list("ucsd"))
+    print("\nb. Back")
+    print("q. Quit")
+    choice = raw_input(" Requests >>  ")
+    infra_exec_menu(choice)
+    return
+
+def request_list_icfb():
+    print("Obtaining requested data (this may take a minute) .............")
+    print("Please hold the line caller you are important to us.")
+    print(request_list("icfb"))
+    print("\nb. Back")
+    print("q. Quit")
+    choice = raw_input(" Requests >>  ")
+    infra_exec_menu(choice)
+    return
 
 #################### Infrastructure Menu #######################################
 def infra_menu():
@@ -254,7 +275,8 @@ main_menu_actions = {
 
 requests_menu_actions = {
     'main_menu': requests_menu,
-    '1': request_list,
+    '1': request_list_ucsd,
+    '2': request_list_icfb,
     'm': main_menu,
     'b': requests_menu,
     'q': exit,

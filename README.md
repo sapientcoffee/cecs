@@ -16,6 +16,8 @@ To use (with caution), simply do::
 
 I will at some stage (once it is in a useful state) publish on PyPI to allow much easier installation.
 
+Do you want or need an environment to test against? Well the good news for ICFB is that Cisco DevNet have made a sandbox avaialble. To get more information go to my [blog](http://clijockey.com/intercloud-fabric-api/).
+
 
 ### Working Functions
 The module is most defiantly work in progress, the following functions are working (these are only the ones that I think are useful rather than all in the module);

@@ -320,13 +320,13 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
 #
 ################################################################################
 
-def sr_get():
+def sr_get(env):
     '''
     Return the service request for the logged in user
     :return: APITabularReport (JSON)
     '''
     apioperation = "userAPIGetServiceRequests"
-    r = apiCall("ucsd", apioperation)
+    r = apiCall(env, apioperation)
     #j = json.loads(r.text)
     return r
 
@@ -430,9 +430,6 @@ def getAllVMs(env):
     #j = json.loads(r.text)
 
     return r
-
-
-
 
 def VMNameToID(vm_name):
     '''
