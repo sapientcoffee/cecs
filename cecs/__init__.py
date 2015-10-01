@@ -101,6 +101,7 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
     '''
     Craetes the URL format to make the call to UCS Director or Intercloud Fabric
     Rest API. This is a hacked way to achieve overloading
+    :param env: Specify if the API call should be against UCSD or ICFB
     :param api: The specific API call required
     :param param0: The initial parameter required to create the request structure
     :param param1: The 2nd if required
@@ -322,7 +323,7 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
 
 def sr_get(env):
     '''
-    Return the service request for the logged in user
+    Return the service request for the logged in user (Both UCSD & ICFB)
     :return: APITabularReport (JSON)
     '''
     apioperation = "userAPIGetServiceRequests"
@@ -424,49 +425,62 @@ def getAllVMs(env):
     #apioperation = "Intercloud:userAPIGetAllVMs"
     #apioperation = "userAPIGetAllVMs"
     #env = "ucsd"
-
+    print("About to call in getAllVMs " + env + " using " + apioperation )
     r = apiCall(env, apioperation)
     #r = ucsdCall(apioperation)
     #j = json.loads(r.text)
 
     return r
 
-def VMNameToID(vm_name):
+def VMNameToID(env, vm_name):
     '''
     Will return the 'vmid' when the VM Name is passed. Currently on UCSD but will be expanded to ICF
     :param api: The specific API call required
     :param: VM_Name
     :return: vmid
     '''
-    apioperation = "Intercloud:userAPIGetAllVMs"
-    env = "icfb"
+    if env == "ucsd":
+        apioperation = "userAPIGetAllVMs"
+    elif env == "icfb":
+        apioperation = "Intercloud:userAPIGetAllVms"
+
+    print("About to call in VMnameToID " + env + " using " + apioperation)
     r = apiCall(env, apioperation)
-    #j = json.loads(r.text)
 
     all_vms = r['serviceResult']['rows']
-    for vm in all_vms:
-        if (vm['VM_Name'] == vm_name):
-            vmid = vm['VM_ID']
-        else:
-            vmid = "Error, " + vm_name + " not found!!"
+    if env == "ucsd":
+        print("Checking against UCSD")
+        for vm in all_vms:
+            if (vm['VM_Name'] == vm_name):
+                vmid = vm['VM_ID']
+                return vmid
+            else:
+                vmid = "Error, " + vm_name + " not found!!"
+    elif env == "icfb":
+        print("Checking against ICFB")
+        for vm in all_vms:
+            if vm['Instance_ID'] == vm_name:
+                vmid = vm['VM_ID']
+                return vmid
+            else:
+                vmid = "Error, " + vm_name + " not found!!"
 
-    return vmid
-
-
-def vm_action(vm_name, action, comment):
+def vm_action(env, vm_name, action, comment):
     '''
     This will alter the status (on, off etc.) of a VM. It has to work out the
     vmid based on the VM name that is passed.
     '''
+    #print("starting")
 
     ## Add some logic so that is vm_name is actually an integer assume its the vm_id however if string its a name
 
     # Check if the VM is managed bu UCSD or ICF
     # Need to work out some logic that if it exisst on both ICF and UCSD (as could be powered on on prem post migration).
-    vmid = VMNameToID(vm_name)
-    managed = "ucsd" # hardcoded at the moment
-
-    if managed == "ucsd":
+    print("Working out the vmid")
+    vmid = VMNameToID(env, vm_name)
+    print("The vmid is" + str(vmid))
+    if env == "ucsd":
+        #print("UCSD env selected")
     # If UCSD follow the following
     # check the power status and work out if needs to actually execute
         apioperation = "userAPIExecuteVMAction"
@@ -488,7 +502,7 @@ def vm_action(vm_name, action, comment):
 
         #r = ucsdCall(apioperation, vmid, action, comment)
 
-    elif managed == "icfd":
+    elif env == "icfb":
     # If ICF do this instead
         generic_actions = ["powerOff",
                            "powerOn",
@@ -497,19 +511,22 @@ def vm_action(vm_name, action, comment):
         if action == "help": return generic_actions
         if not any(action == a for a in generic_actions): return "Action not valid"
 
-        if status == "powerOff":
-            apioperation = "userAPIVmPowerOff"
-        elif status == "powerOn":
-            apioperation = "userAPIVmPowerOn"
-        elif status == "reboot":
-            apioperation = "userAPIVmReboot"
-        elif status == "terminate":
-            apioperation = "userAPIVmTerminate"
+        if action == "powerOff":
+            apioperation = "Intercloud:userAPIVmPowerOff"
+        elif action == "powerOn":
+            apioperation = "Intercloud:userAPIVmPowerOn"
+        elif action == "reboot":
+            apioperation = "Intercloud:userAPIVmReboot"
+        elif action == "terminate":
+            apioperation = "Intercloud:userAPIVmTerminate"
 
     else:
         r = "Error, VM not found"
 
     print "About to " + action + " the VM '" + vm_name + "' with VM_ID '" +str(vmid)+ "' ."
-    env = "ucsd"
+    #env = "icfb"
     r = apiCall(env, apioperation, str(vmid), action, comment)
+
+
+
     return r

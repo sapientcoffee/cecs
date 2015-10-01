@@ -77,12 +77,14 @@ DEFAULT = '\033[39m'
 ##
 ### Testing power VM on and off
 ##
-# vm = "vm-Demo-SR465"
-# action = "powerOn"
-# comment = "testing API and python script"
-#
-# call = cecs.vm_action(vm, action, comment)
-# print(call)
+#vm = "t3_test-bosch_db_2vm-Demo-SR493"
+vm = "sandbox-vm-70"
+env = "icfb"
+action = "powerOff"
+comment = "testing API and python script"
+
+call = cecs.vm_action(env, vm, action, comment)
+print(call)
 
 ##
 ### SR Testing testing
@@ -104,39 +106,39 @@ DEFAULT = '\033[39m'
 ##
 ### Get all VMs and put in a table (including colours for the power status)
 
-def list_vms(env):
-    j = cecs.getAllVMs(env)
-    all_vms = j['serviceResult']['rows']
-
-    table = PrettyTable(["ID", "Name", "IP Address(s)", "Power", "VDC"])
-    table.align["Name"] = "l" # Left align
-    table.padding_width = 1 # One space between column edges and contents (default)
-
-    for item in all_vms:
-        # Values that are the same for UCSD & ICFB responses
-        a = item["VM_ID"]
-        if item["Power_State"] == "ON":
-            d = GREEN + item["Power_State"] + DEFAULT
-        elif item["Power_State"] == "OFF":
-            d = RED + item["Power_State"] + DEFAULT
-        else:
-            d = BLUE + item["Power_State"] + DEFAULT
-        e = item["vDC"]
-
-        # Values that differ between UCSD & ICFB
-        if env == "ucsd":
-            b = item["VM_Name"]
-            c = item["IP_Address"]
-        elif env == "icfb":
-            b = item["Instance_ID"]
-            c = item["Enterprise_IP"]
-
-        table.add_row([a, b, c, d, e])
-    return table
-
-
-print(list_vms("icfb"))
-print(list_vms("ucsd"))
+# def list_vms(env):
+#     j = cecs.getAllVMs(env)
+#     all_vms = j['serviceResult']['rows']
+#
+#     table = PrettyTable(["ID", "Name", "IP Address(s)", "Power", "VDC"])
+#     table.align["Name"] = "l" # Left align
+#     table.padding_width = 1 # One space between column edges and contents (default)
+#
+#     for item in all_vms:
+#         # Values that are the same for UCSD & ICFB responses
+#         a = item["VM_ID"]
+#         if item["Power_State"] == "ON":
+#             d = GREEN + item["Power_State"] + DEFAULT
+#         elif item["Power_State"] == "OFF":
+#             d = RED + item["Power_State"] + DEFAULT
+#         else:
+#             d = BLUE + item["Power_State"] + DEFAULT
+#         e = item["vDC"]
+#
+#         # Values that differ between UCSD & ICFB
+#         if env == "ucsd":
+#             b = item["VM_Name"]
+#             c = item["IP_Address"]
+#         elif env == "icfb":
+#             b = item["Instance_ID"]
+#             c = item["Enterprise_IP"]
+#
+#         table.add_row([a, b, c, d, e])
+#     return table
+#
+#
+# print(list_vms("icfb"))
+# print(list_vms("ucsd"))
 
 
 
