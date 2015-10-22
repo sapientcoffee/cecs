@@ -22,11 +22,12 @@ Do you want or need an environment to test against? Well the good news for ICFB 
 ### Working Functions
 The module is most defiantly work in progress, the following functions are working (these are only the ones that I think are useful rather than all in the module);
 
-| Fuctions        | Purpose     |
-| ------------- |:-------------:|
-| getAllVMs      | Gets a list of all VMs for the user |
-| sr_get      | Gets a list of all the service requests       |  
-|   |       |    
+| Fuctions        | Purpose     | Params |
+| ------------- |:-------------:|:-------------:|
+| getAllVMs      | Gets a list of all VMs for the user | |
+| sr_get      | Gets a list of all the service requests       |  |
+| GetCatalogs |  Returns the catalogs for the specified user group or all groups. | Environment(UCSD or ICFB) and Group(either group name or all) |
+| GetIconURL | Returns the icon image URL of the specified icon identifier. Only ICF API! | imageId |   
 
 
 
