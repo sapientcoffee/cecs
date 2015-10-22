@@ -4,6 +4,8 @@ This is my first attempt at creating a Python Module and is intended to assist w
 
 This have been inspired and influenced by https://github.com/hpreston/cisco_cloud. I initially intended to contribute to Hanks good work however as a learning exercise I wanted to create my own module and learn how to use unit testing for it.
 
+This is still a work in progress project and is evolving when I get time to work on it, if you would like to assist with the development please reach out to me or make pull requests etc.
+
 Once you have pulled the module down you should browse into the directory and execute;
 
     python setup.py install
