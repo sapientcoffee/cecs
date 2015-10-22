@@ -598,3 +598,56 @@ def GetIconURL(imageId):
 
     r = apiCall(env, apioperation, imageId)
     return r
+
+#################### Cloud Operations ##########################################
+# The following APIs enable you to perform cloud-related operations. Only ICF.
+################################################################################
+
+def GetvCenter():
+    '''
+    Returns a list of all VMware vCenter servers.
+    :param: None
+    :return: APITabularReport
+    '''
+
+    apioperation = "Intercloud:userAPIGetAllVCenters"
+
+    '''
+    Returns a list of all data centers that match the VMware vCenter account name.
+    :param: vCenterAccountName
+    :return: APITabularReport
+    '''
+    apioperation = "Intercloud:userAPIGetAllDataCenters"
+
+
+def GetClouds():
+    '''
+    Returns a list of all Cisco Intercloud Fabric clouds.
+    :param: None
+    :return: APITabularReport
+    '''
+    apioperation = "Intercloud:userAPIGetAllicfClouds"
+
+def GetTunnelProfiles():
+    '''
+    Returns a list of all tunnel profiles.
+    :param icfCloudId: Cisco Intercloud Fabric cloud identifier.
+    :return: APITabularReport
+    '''
+    apioperation = "Intercloud:userAPIGetAllTunnelProfiles"
+
+def GetCloudSummary():
+    '''
+    Returns the details of the Cisco Intercloud Fabric clouds that match the specified cloud identifier.
+    :param: None
+    :return: APITabularReport
+    '''
+    apioperation = "Intercloud:userAPIGeticfCloudSummary"
+
+def GetVMvNics():
+    '''
+    Returns a list of the vNICs configured on the specified VM.
+    :param vmId: VM identifier available from the VM report screen.
+    :return: APITabularReport
+    '''
+    apioperation = "Intercloud:userAPIGetVMVnics"
