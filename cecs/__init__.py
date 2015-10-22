@@ -66,7 +66,7 @@ requests.packages.urllib3.disable_warnings()
 #                 break
 #     return new_list
 
-def ucsdCall(api, param0 = None, param1 = None, param2 = None, param3 = None):
+def ucsdCall(api, param0 = None, param1 = None, param2 = None, param3 = None, param4 = None):
     '''
     NOTE: This is deprecated and will be removed once all functions have been migrated!
 
@@ -92,12 +92,18 @@ def ucsdCall(api, param0 = None, param1 = None, param2 = None, param3 = None):
         "{param0:\"" + param0 + '",' + \
         'param1:"' + param1 + '"' + \
         ',param2:"' + param2 + '"}'
+    elif param4 is None:
+        u = url % (ucsdserver) + getstring % (api) + parameter_lead + \
+        "{param0:\"" + param0 + '",' + \
+        'param1:"' + param1 + '"' + \
+        'param2:"' + param2 + '"' + \
+        ',param3:"' + param3 + '"}'
 
     r = requests.get(u, headers=headers)
     j = json.loads(r.text)
     return r
 
-def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None):
+def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None, param3 = None):
     '''
     Craetes the URL format to make the call to UCS Director or Intercloud Fabric
     Rest API. This is a hacked way to achieve overloading
@@ -131,6 +137,12 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
         "{param0:\"" + param0 + '",' + \
         'param1:"' + param1 + '"' + \
         ',param2:"' + param2 + '"}'
+    elif param4 is None:
+        u = url % (server) + getstring % (api) + parameter_lead + \
+        "{param0:\"" + param0 + '",' + \
+        'param1:"' + param1 + '"' + \
+        'param2:"' + param2 + '"' + \
+        ',param3:"' + param3 + '"}'
 
     # Due to the setup of the lab I have disabled the SSL cert verification however
     # in a production environemnt I would sugest changing verify to True so that the
@@ -527,6 +539,25 @@ def vm_action(env, vm_name, action, comment):
     #env = "icfb"
     r = apiCall(env, apioperation, str(vmid), action, comment)
 
-
-
     return r
+
+## ICF Additions
+
+# def createIPPool(policyName, staticIpPool, vlanId, gatewayIp, subnetMask):
+#     '''
+#     Creates the static IP address pool and returns the policy identifier.
+#     :param0 policyName: Policy name for use with the static IP address pool
+#     :param1 staticIpPool: IP Address pool range
+#     :param2 vlanId: VLAN identifier.
+#     :param3 gatewayIp: Gateway IP address.
+#     :param4 subnetMask: Subnet mask for the IP address pool.
+#     :return: None
+#     '''
+#     env = "ucsd"
+#     apioperation = "Intercloud:userAPIcreateStaticIPPool"
+#
+#     # validate IP address
+#
+#     #is subnetMask a prefic ie /24 or full mask 255.255.255.0
+#
+#     r = apiCall(env, apioperation)
