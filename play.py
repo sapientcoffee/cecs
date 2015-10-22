@@ -78,13 +78,13 @@ DEFAULT = '\033[39m'
 ### Testing power VM on and off
 ##
 #vm = "t3_test-bosch_db_2vm-Demo-SR493"
-vm = "sandbox-vm-70"
-env = "icfb"
-action = "powerOff"
-comment = "testing API and python script"
+# vm = "sandbox-vm-70"
+# env = "icfb"
+# action = "powerOff"
+# comment = "testing API and python script"
 
-call = cecs.vm_action(env, vm, action, comment)
-print(call)
+#call = cecs.vm_action(env, vm, action, comment)
+#print(call)
 
 ##
 ### SR Testing testing
@@ -226,3 +226,9 @@ print(call)
 
 #srlog = cecs.sr_log("476", "")
 #pprint(srlog)
+
+### catalogs
+get = cecs.GetIconURL("5")
+getCat = cecs.GetCatalogs("icfb","all")
+pprint(get)
+pprint(getCat)

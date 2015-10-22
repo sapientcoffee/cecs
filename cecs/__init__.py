@@ -103,7 +103,7 @@ def ucsdCall(api, param0 = None, param1 = None, param2 = None, param3 = None, pa
     j = json.loads(r.text)
     return r
 
-def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None, param3 = None):
+def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None, param4 = None):
     '''
     Craetes the URL format to make the call to UCS Director or Intercloud Fabric
     Rest API. This is a hacked way to achieve overloading
@@ -561,3 +561,40 @@ def vm_action(env, vm_name, action, comment):
 #     #is subnetMask a prefic ie /24 or full mask 255.255.255.0
 #
 #     r = apiCall(env, apioperation)
+
+#################### Catalog Operations ########################################
+# Catalog operation APIs enable users to self-provision virtual machines (VMs)
+# using predefined catalog items. A catalog item is #created by the system
+# administrator and defines the parameters, such as the cloud name and group
+# name, to which the VM is bound.
+################################################################################
+
+def GetCatalogs(env, group):
+    '''
+    Returns the catalogs for the specified user group or all groups.
+    :param: GroupName
+    :return: APITabularReport
+    '''
+
+    if group == "all":
+        apioperation = "userAPIGetAllCatalogs"
+        r = apiCall(env, apioperation)
+    else:
+        apioperation = "userAPIGetCatalogsPerGroup"
+        r = apiCall(env, apioperation, group)
+
+    return r
+
+
+def GetIconURL(imageId):
+    '''
+    Returns the icon image URL of the specified icon identifier. Only ICF API!
+    :param: imageId
+    :return: FormLOVPair[]
+    '''
+
+    env = "icfb"
+    apioperation = "userAPIGetIconImageURL"
+
+    r = apiCall(env, apioperation, imageId)
+    return r
