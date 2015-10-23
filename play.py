@@ -234,5 +234,5 @@ DEFAULT = '\033[39m'
 #pprint(getCat)
 
 ### Cloud Operations
-get = cecs.GetVMvNics("icfb", "10")
+get = cecs.GetStaticIPPool("icfb")
 pprint(get)
