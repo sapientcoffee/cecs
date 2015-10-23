@@ -228,7 +228,11 @@ DEFAULT = '\033[39m'
 #pprint(srlog)
 
 ### catalogs
-get = cecs.GetIconURL("5")
-getCat = cecs.GetCatalogs("icfb","all")
+#get = cecs.GetIconURL("5")
+#getCat = cecs.GetCatalogs("icfb","all")
+#pprint(get)
+#pprint(getCat)
+
+### Cloud Operations
+get = cecs.GetVMvNics("icfb", "10")
 pprint(get)
-pprint(getCat)

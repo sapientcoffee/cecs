@@ -30,6 +30,12 @@ The module is most defiantly work in progress, the following functions are worki
 | sr_get      | Gets a list of all the service requests       |  |
 | GetCatalogs |  Returns the catalogs for the specified user group or all groups. | Environment(UCSD or ICFB) and Group(either group name or all) |
 | GetIconURL | Returns the icon image URL of the specified icon identifier. Only ICF API! | imageId |   
+| | | |
+| GetvCenter | Returns a list of all VMware vCenter servers or of all data centers that match the VMware vCenter account name. | |
+| GetClouds | Returns a list of all Cisco Intercloud Fabric clouds. | |
+| GetTunnelProfiles | Returns a list of all tunnel profiles. | |
+| GetCloudSummary | Returns the details of the Cisco Intercloud Fabric clouds that match the specified cloud identifier. | |
+| GetVMvNics | Returns a list of the vNICs configured on the specified VM. | |
 
 
 
