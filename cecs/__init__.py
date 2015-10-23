@@ -603,51 +603,101 @@ def GetIconURL(imageId):
 # The following APIs enable you to perform cloud-related operations. Only ICF.
 ################################################################################
 
-def GetvCenter():
+def GetvCenter(env, vCenterAccountName):
     '''
-    Returns a list of all VMware vCenter servers.
-    :param: None
+    Returns a list of all VMware vCenter servers or of all data centers that match the VMware vCenter account name.
+    :param: None or vCenterAccountName
     :return: APITabularReport
     '''
+    if env == "":
+        env = "icfb"
+    elif env == "icfb":
+        env = env
+    else:
+        error = "Not a valid environment, only 'icfb' is an option"
+        return error
 
-    apioperation = "Intercloud:userAPIGetAllVCenters"
+    if vCenterAccountName == "all" or vCenterAccountName == "":
+        apioperation = "Intercloud:userAPIGetAllVCenters"
+        r = apiCall(env, apioperation)
+    else:
+        apioperation = "Intercloud:userAPIGetAllDataCenters"
+        r = apiCall(env, apioperation, vCenterAccountName)
 
-    '''
-    Returns a list of all data centers that match the VMware vCenter account name.
-    :param: vCenterAccountName
-    :return: APITabularReport
-    '''
-    apioperation = "Intercloud:userAPIGetAllDataCenters"
+    return r
 
-
-def GetClouds():
+def GetClouds(env):
     '''
     Returns a list of all Cisco Intercloud Fabric clouds.
     :param: None
     :return: APITabularReport
     '''
+    if env == "":
+        env = "icfb"
+    elif env == "icfb":
+        env = env
+    else:
+        error = "Not a valid environment, only 'icfb' is an option"
+        return error
+
     apioperation = "Intercloud:userAPIGetAllicfClouds"
 
-def GetTunnelProfiles():
+    r = apiCall(env, apioperation)
+    return r
+
+def GetTunnelProfiles(env):
     '''
     Returns a list of all tunnel profiles.
-    :param icfCloudId: Cisco Intercloud Fabric cloud identifier.
-    :return: APITabularReport
-    '''
-    apioperation = "Intercloud:userAPIGetAllTunnelProfiles"
-
-def GetCloudSummary():
-    '''
-    Returns the details of the Cisco Intercloud Fabric clouds that match the specified cloud identifier.
     :param: None
     :return: APITabularReport
     '''
+    if env == "":
+        env = "icfb"
+    elif env == "icfb":
+        env = env
+    else:
+        error = "Not a valid environment, only 'icfb' is an option"
+        return error
+
+    apioperation = "Intercloud:userAPIGetAllTunnelProfiles"
+
+    r = apiCall(env, apioperation)
+    return r
+
+def GetCloudSummary(env, icfCloudId):
+    '''
+    Returns the details of the Cisco Intercloud Fabric clouds that match the specified cloud identifier.
+    :param icfCloudId: Cisco Intercloud Fabric cloud identifier.
+    :return: APITabularReport
+    '''
+    if env == "":
+        env = "icfb"
+    elif env == "icfb":
+        env = env
+    else:
+        error = "Not a valid environment, only 'icfb' is an option"
+        return error
+
     apioperation = "Intercloud:userAPIGeticfCloudSummary"
 
-def GetVMvNics():
+    r = apiCall(env, apioperation, icfCloudId)
+    return r
+
+def GetVMvNics(env, vmId):
     '''
     Returns a list of the vNICs configured on the specified VM.
     :param vmId: VM identifier available from the VM report screen.
     :return: APITabularReport
     '''
+    if env == "":
+        env = "icfb"
+    elif env == "icfb":
+        env = env
+    else:
+        error = "Not a valid environment, only 'icfb' is an option"
+        return error
+
     apioperation = "Intercloud:userAPIGetVMVnics"
+
+    r = apiCall(env, apioperation, vmId)
+    return r
