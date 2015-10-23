@@ -314,8 +314,9 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
 #     apioperation = "userAPIExportWorkflows"
 
 #################### Service Request Operations #################################
-# This section contains the 'Service Request Operations' calls. Based on version 5.3.
+# This section contains the 'Service Request Operations' calls.
 #
+## UCSD
 #L G  userAPISubmitServiceRequest			    [DEPRICATED] Submits a service request for provisioning VMs. Supports Qty 1. Replaced with userAPIProvisionRequest
 #L G  userAPISubmitServiceRequestCustom         [DEPRICATED] Submits a service request for provisioning virtual machines (VMs) with the inputs vmName, vCPU, and memory.
 #L G  userAPIResubmitServiceRequest             Resubmits a service request for processing the specified service request.
@@ -330,17 +331,32 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
 #L G + userAPIGetVMsForServiceRequest			Returns VMs that are currently associated with the specified service request.
 #L G userAPISubmitWorkflowServiceRequest		Submits a service request with a workflow. Returns the ID of the service request.
 #
-#
+## ICFB
+# userAPIGetServiceRequestDetails
+# userAPIGetServiceRequests
+# userAPIGetVMsForServiceRequest
+
 ################################################################################
 
 def sr_get(env):
+    # GetSR duplicates this function using latest name convention
     '''
-    Return the service request for the logged in user (Both UCSD & ICFB)
+    Return the service request for the logged in user group (Both UCSD & ICFB)
+    :parm None
     :return: APITabularReport (JSON)
     '''
     apioperation = "userAPIGetServiceRequests"
     r = apiCall(env, apioperation)
-    #j = json.loads(r.text)
+    return r
+
+def GetSR(env):
+    '''
+    Return the service request for the logged in user group (Both UCSD & ICFB)
+    :parm None
+    :return: APITabularReport (JSON)
+    '''
+    apioperation = "userAPIGetServiceRequests"
+    r = apiCall(env, apioperation)
     return r
 
 def sr_details(srnumber):
@@ -351,6 +367,26 @@ def sr_details(srnumber):
     '''
     apioperation = "userAPIGetServiceRequestWorkFlow"
     r = ucsdCall(apioperation, srnumber)
+    return r
+
+def GetSRDetails(env, requestId):
+    '''
+    Returns details for the specified service request. (Both UCSD & ICFB)
+    :param requestId: Service request identifier.
+    :return: JSON of the SR Status
+    '''
+    apioperation = "userAPIGetServiceRequestDetails"
+    r = apiCall(env, apioperation, requestId)
+    return r
+
+def GetSRVMs(env, requestId):
+    '''
+    Returns the VMs for the specified service request. (Both UCSD & ICFB)
+    :param requestId: Service request identifier.
+    :return: JSON of the SR VMs
+    '''
+    apioperation = "userAPIGetServiceRequestDetails"
+    r = apiCall(env, apioperation, requestId)
     return r
 
 def sr_log(srnumber, severity):
@@ -399,6 +435,8 @@ def group_name(name):
     return r
 
 #################### Reports ###################################################
+#
+################################################################################
 def report_tabular(group, report):
     #'''
     # Old v1 of the API, although userAPIGetServiceRequests will get only for logged in user. If using SERVICE-REQUESTS-T10 get get all.
