@@ -234,5 +234,5 @@ DEFAULT = '\033[39m'
 #pprint(getCat)
 
 ### Cloud Operations
-get = cecs.GetStaticIPPool("icfb")
+get = cecs.GetSRVMs("icfb", "444")
 pprint(get)
