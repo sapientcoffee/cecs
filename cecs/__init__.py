@@ -701,3 +701,58 @@ def GetVMvNics(env, vmId):
 
     r = apiCall(env, apioperation, vmId)
     return r
+
+#################### Network Operations ########################################
+# The following APIs enable you to perform network-related operations. Only ICF.
+################################################################################
+
+
+def GetMgmtPortProfiles(env, vmManager, dataCenter):
+    # Not been able to test yet as dont know the param values to pass
+    '''
+    Returns a list of all management port profiles for the specified VM Manager and data center.
+    :param vmManager: VM Manager identifier.
+    :param dataCenter: Data center identifier.
+    :return: APITabularReport
+    '''
+    apioperation = "Intercloud:userAPIGetAllPvtMgmtPortProfiles"
+
+    r = apiCall(env, apioperation, vmManager, dataCenter)
+    return r
+
+def GetStaticIPPoolPolicies(env):
+    '''
+    Returns a list of all static IP address pool policies.
+    :param None
+    :return: APITabularReport
+    '''
+    apioperation = "Intercloud:userAPIGetAllStaticIPPoolPolicy"
+
+    r = apiCall(env, apioperation)
+    return r
+
+def GetStaticIPPool(env):
+    ## looks like wants param0, the doc indicates no parm is required however
+    # doesnt work as expected. I have raised the qu to the doc author.
+    '''
+    Returns a list of all static IP address pools.
+    :param id
+    :return: APITabularReport
+    '''
+
+    apioperation = "Intercloud:userAPIGetAllStaticIPPools"
+
+    r = apiCall(env, apioperation, "2")
+    return r
+
+def GetResIP(env):
+    '''
+    Returns a list of all reserved IP addresses.
+    :param None
+    :return: APITabularReport
+    '''
+
+    apioperation = "Intercloud:userAPIGetIPAddressPool"
+
+    r = apiCall(env, apioperation)
+    return r
