@@ -127,7 +127,7 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
         "{}"
     elif param1 is None:
         u = url % (server) + getstring % (api) + parameter_lead + \
-        "{param0:\"" + param0 + '"' + '}'
+        "{param0:" + param0 + '}'
     elif param2 is None:
         u = url % (server) + getstring % (api) + parameter_lead + \
         "{param0:\"" + param0 + '",' + \
@@ -147,6 +147,7 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
     # Due to the setup of the lab I have disabled the SSL cert verification however
     # in a production environemnt I would sugest changing verify to True so that the
     # SSL certs are validated!!
+    print u
     r = requests.get(u, headers=headers, verify=False)
     j = json.loads(r.text)
     return j
@@ -755,4 +756,86 @@ def GetResIP(env):
     apioperation = "Intercloud:userAPIGetIPAddressPool"
 
     r = apiCall(env, apioperation)
+    return r
+
+#################### VDC Operations ############################################
+# Virtual data center (VDC) management APIs define VDCs based on physical,
+# virtual, or public cloud resources. A VDC is an environment that combines
+# virtual resources, operational details, rules, and policies to manage specific
+# group requirements.
+################################################################################
+
+
+def GetAllVDCs(env):
+    # Not been able to test yet as dont know the param values to pass
+    '''
+    Returns all VDCs for the logged-in user group
+    :param None
+    :return: APITabularReport
+    '''
+    apioperation = "userAPIGetAllVDCs"
+
+    r = apiCall(env, apioperation)
+    return r
+
+def CreateVDC(env, APIVDCDetails):
+    '''
+    Creates a vDC defined by the provided data.
+    :param: APIVDCDetails
+    :return: boolean
+    '''
+    if env == "":
+        env = "ucsd"
+    elif env == "ucsd":
+        env = env
+    else:
+        error = "Not a valid environment, only 'ucsd' is an option"
+        return error
+    apioperation = "userAPICreateVDC"
+
+    # /app/api/rest?formatType=json&opName=userAPICreateVDC&opData={param0:{"vdcName":"sample","vdcDescription":"sample","cloudName":"sample","groupName":1000,"approver1":"sample","approver2":"sample","vdcSupportEmail":"sample","vdcCustomerNoticationEmail":"sample","systemPolicy":"sample","deploymentPolicy":"sample","slaPolicy":"sample","computingPolicy":"sample","storagePolicy":"sample","networkPolicy":"sample","costModel":"sample","isLocked":true,"isDeletable":true,"inactivityPeriodForDeletion":1000,"selfServiceEndUserPolicy":"sample"}}
+
+    values = str(APIVDCDetails)
+
+    print values
+    r = apiCall(env, apioperation, values)
+    return r
+
+def ExportVDC(env, vdcName):
+    '''
+    Exports a vDC.
+    :param vdcName: Name of the vDC that you want to export
+    :return: String
+    '''
+    if env == "":
+        env = "ucsd"
+    elif env == "ucsd":
+        env = env
+    else:
+        error = "Not a valid environment, only 'ucsd' is an option"
+        return error
+
+    apioperation = "userAPIExportVDC"
+
+    r = apiCall(env, apioperation, vdcName)
+    return r
+
+def ImportVDC(env, vdcName):
+    # No idea how the hell this one works!!!!
+    '''
+    Imports a vDC.
+    :param vdcName: Name of the vDC that you want to import
+    :return: VDC
+    '''
+    if env == "":
+        env = "ucsd"
+    elif env == "ucsd":
+        env = env
+    else:
+        error = "Not a valid environment, only 'ucsd' is an option"
+        return error
+
+    apioperation = "userAPIImportVDC"
+
+    r = apiCall(env, apioperation, vdcName)
     return r

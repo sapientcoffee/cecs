@@ -228,11 +228,38 @@ DEFAULT = '\033[39m'
 #pprint(srlog)
 
 ### catalogs
-#get = cecs.GetIconURL("5")
+#getIcon = cecs.GetIconURL("5")
 #getCat = cecs.GetCatalogs("icfb","all")
-#pprint(get)
+#pprint(getIcon)
 #pprint(getCat)
 
 ### Cloud Operations
-get = cecs.GetStaticIPPool("icfb")
+values = "{\
+\"vdcName\":\"customerTest\",\
+\"vdcDescription\":\"customerTest\",\
+\"cloudName\":\"VMWare Development\",\
+\"groupName\":\"1\",\
+\"approver1\":\"null\",\
+\"approver2\":\"null\",\
+\"vdcSupportEmail\":\"name@company.com\",\
+\"vdcCustomerNoticationEmail\":\"name@company.com\",\
+\"systemPolicy\":\"null\",\
+\"deploymentPolicy\":\"default-d\",\
+\"slaPolicy\":\"null\",\
+\"computingPolicy\":\"default\",\
+\"storagePolicy\":\"default\",\
+\"networkPolicy\":\"default\",\
+\"costModel\":\"DefaultCostModel\",\
+\"isLocked\":\"false\",\
+\"isDeletable\":\"false\",\
+\"isSelfServicePowerMgmt\":\"false\",\
+\"isSelfServiceResize\":\"false\",\
+\"isSelfServiceDeleteVM\":\"false\",\
+\"isSelfServiceSnapshotMgmt\":\"false\",\
+\"inactivityPeriodForDeletion\":\"-1\"}"
+
+#values[2:]
+
+#print(values)
+get = cecs.CreateVDC("ucsd", values)
 pprint(get)
