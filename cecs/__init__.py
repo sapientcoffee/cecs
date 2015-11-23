@@ -19,7 +19,7 @@ import requests
 import json
 
 from markdown import markdown
-from pprint import pprint
+#from pprint import pprint
 
 # import standard variables and configuration info
 from local_config import ucsdserver, ucsd_key, url, getstring, parameter_lead, headers, icfbserver, icfb_key
