@@ -249,4 +249,4 @@ https://sandboxicf.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServi
 +----+----------+------------+------+--------+
 ```
 #### cecs-cli.py
-This is just my scratch pad (test area) until I get unittest setup and run some automated checks. I also use it when working out new things. 
+This is just my scratch pad (test area) until I get unittest setup and run some automated checks. I also use it when working out new things.
