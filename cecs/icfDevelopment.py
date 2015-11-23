@@ -159,14 +159,14 @@ def operations(server, status):
 
     #call a function to work out the server vmid based on name (this will need to be created)
 
-    if status == "off":
-        apioperation = "Intercloud:userAPIVmPowerOff"
-    elif status == "on":
-        apioperation = "Intercloud:userAPIVmPowerOn"
-    elif status == "reboot"
-        apioperation = "Intercloud:userAPIVmReboot"
-    elif status = "terminate"
-        apioperation = "Intercloud:userAPIVmTerminate"
+    # if status == "off":
+    #     apioperation = "Intercloud:userAPIVmPowerOff"
+    # elif status == "on":
+    #     apioperation = "Intercloud:userAPIVmPowerOn"
+    # elif status == "reboot"
+    #     apioperation = "Intercloud:userAPIVmReboot"
+    # elif status = "terminate"
+    #     apioperation = "Intercloud:userAPIVmTerminate"
 
 
     r = ucsdCall(apioperation, vmid)
