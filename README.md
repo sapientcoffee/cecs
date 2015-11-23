@@ -41,21 +41,21 @@ The module is most defiantly work in progress, the following functions are worki
 
 ### Example Scripts
 Examples that have been created using this module are as follows, they reside on the /examples directory;
-'''
+```
   ├── examples
   │   ├── cecs-cli.py
   │   ├── play.py
   │   └── ui.py
-'''
+```
 
 #### ui.py
 This script provides a text base menu to do display various things. The menu should be self explanatory.
 
 
 #### cecs-cli.py
-The idea of this script is to create a command line interface to both UCSD & ICFB. At the moment I havnt got the 'setuptools' working correctly to allow this to run as a true CLI. You can however run the script using '''python cecs-cli.py''' or make the file executable. As a hack I have created an alias to it using cecs (which will be what I use when I work out 'entry_points' on 'setuptools').
+The idea of this script is to create a command line interface to both UCSD & ICFB. At the moment I havnt got the 'setuptools' working correctly to allow this to run as a true CLI. You can however run the script using ```python cecs-cli.py``` or make the file executable. As a hack I have created an alias to it using cecs (which will be what I use when I work out 'entry_points' on 'setuptools').
 
-You should be able to get help by running '''--help''' on the script. A few example outputs are as follows;
+You should be able to get help by running ```--help``` on the script. A few example outputs are as follows;
 
 ```
 ~ cecs                                                                                                                                                           
@@ -90,7 +90,7 @@ Commands:
 ```
 
 Another way to get help.
-'''
+```
 ~ cecs --help                                                                                                                                                   
 Usage: cecs-cli.py [OPTIONS] COMMAND [ARGS]...
 
@@ -120,10 +120,10 @@ Commands:
   list     This will list a number of things managed by...
   order    Order items
   version  Client & server versions
-'''
+```
 
 Help on a specific option;
-'''
+```
 ~ cecs list --help                                                                                                                                              
 Usage: cecs-cli.py list [OPTIONS]
 
@@ -135,11 +135,11 @@ Options:
   -i, --item TEXT  Items you want ot list
   -e, --env TEXT   Select the environment, either ucsd or icfb
   -h, --help       Show this message and exit.
-'''
+```
 
 
-To pull back all the service requests in UCSD, by default the cli will query ucsd. It can be forces using the '''--env''' flag ('''--env ucsd''')
-'''
+To pull back all the service requests in UCSD, by default the cli will query ucsd. It can be forces using the ```--env``` flag (```--env ucsd```)
+```
 ~ cecs list                                                                                                                                                     
 Listing various things
 https://infrastructure.ukidcv.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServiceRequests&opData={}
@@ -170,10 +170,10 @@ https://infrastructure.ukidcv.cisco.com/app/api/rest?formatType=json&opName=user
 | 572 |                     Fenced Container Setup                    |   admin    | Oct 28, 2015 12:18:31 UTC |  Complete |
 | 571 |           Select Storage Tier / Provision VMware VM           | Demo/user  | Oct 28, 2015 12:02:53 UTC |  Complete |
 +-----+---------------------------------------------------------------+------------+---------------------------+-----------+
-'''
+```
 
 To pull back all the service requests from ICFB;
-'''
+```
 ~ cecs list --env icfb                                                                                                                                          
 Listing various things
 https://sandboxicf.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServiceRequests&opData={}
@@ -181,4 +181,4 @@ https://sandboxicf.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServi
 | ID | Workflow | Group/User | Time | Status |
 +----+----------+------------+------+--------+
 +----+----------+------------+------+--------+
-'''
+```
