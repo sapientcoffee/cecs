@@ -40,7 +40,145 @@ The module is most defiantly work in progress, the following functions are worki
 
 
 ### Example Scripts
-Examples that have been created using the module are the following.
+Examples that have been created using this module are as follows, they reside on the /examples directory;
+'''
+  ├── examples
+  │   ├── cecs-cli.py
+  │   ├── play.py
+  │   └── ui.py
+'''
 
 #### ui.py
 This script provides a text base menu to do display various things. The menu should be self explanatory.
+
+
+#### cecs-cli.py
+The idea of this script is to create a command line interface to both UCSD & ICFB. At the moment I havnt got the 'setuptools' working correctly to allow this to run as a true CLI. You can however run the script using '''python cecs-cli.py''' or make the file executable. As a hack I have created an alias to it using cecs (which will be what I use when I work out 'entry_points' on 'setuptools').
+
+You should be able to get help by running '''--help''' on the script. A few example outputs are as follows;
+
+'''
+~ cecs                                                                                                                                                           
+Usage: cecs-cli.py [OPTIONS] COMMAND [ARGS]...
+
+  Cisco Enterprise Cloud Suite Command Line Interface.
+
+  This is a CLI to interact with the compoenents of CECS. Initially this
+  only works with UCS Director (UCSD) and Intercloud Fabric for Business
+  (ICFB). As this project evolves other tools will be incorporated.
+
+  UCS Director:
+
+  UCSD is a data centre automation and orchestration tool. It manages on-
+  premise network, storage and compute (physical & virtual).
+
+  Intercloud Fabric:
+
+  ICFB is hard of the Cisco hybrid cloud strategy that allows, you to extend
+  your on-premise networks into provider and public clouds. It also provides
+  the capabulities to migrate workloads between clouds taking care of any
+  converstion processes.
+
+Options:
+  -h, --help  Show this message and exit.
+
+Commands:
+  hello    This script works similar to the Unix `cat`...
+  list     This will list a number of things managed by...
+  order    Order items
+  version  Client & server versions
+'''
+
+Another way to get help.
+'''
+~ cecs --help                                                                                                                                                   
+Usage: cecs-cli.py [OPTIONS] COMMAND [ARGS]...
+
+  Cisco Enterprise Cloud Suite Command Line Interface.
+
+  This is a CLI to interact with the compoenents of CECS. Initially this
+  only works with UCS Director (UCSD) and Intercloud Fabric for Business
+  (ICFB). As this project evolves other tools will be incorporated.
+
+  UCS Director:
+
+  UCSD is a data centre automation and orchestration tool. It manages on-
+  premise network, storage and compute (physical & virtual).
+
+  Intercloud Fabric:
+
+  ICFB is hard of the Cisco hybrid cloud strategy that allows, you to extend
+  your on-premise networks into provider and public clouds. It also provides
+  the capabulities to migrate workloads between clouds taking care of any
+  converstion processes.
+
+Options:
+  -h, --help  Show this message and exit.
+
+Commands:
+  hello    This script works similar to the Unix `cat`...
+  list     This will list a number of things managed by...
+  order    Order items
+  version  Client & server versions
+'''
+
+Help on a specific option;
+'''
+~ cecs list --help                                                                                                                                              
+Usage: cecs-cli.py list [OPTIONS]
+
+  This will list a number of things managed by Cisco Enterprise Cloud Suite.
+
+  Initially this will be UCS Dirctor only and will evolve to use ICFB
+
+Options:
+  -i, --item TEXT  Items you want ot list
+  -e, --env TEXT   Select the environment, either ucsd or icfb
+  -h, --help       Show this message and exit.
+'''
+
+
+To pull back all the service requests in UCSD, by default the cli will query ucsd. It can be forces using the '''--env''' flag ('''--env ucsd''')
+'''
+~ cecs list                                                                                                                                                     
+Listing various things
+https://infrastructure.ukidcv.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServiceRequests&opData={}
++-----+---------------------------------------------------------------+------------+---------------------------+-----------+
+| ID  |                            Workflow                           | Group/User |            Time           |   Status  |
++-----+---------------------------------------------------------------+------------+---------------------------+-----------+
+| 629 |              Linux - CentOS / Provision VMware VM             | Demo/user  | Nov 17, 2015 17:27:38 UTC |  Complete |
+| 628 |              Linux - CentOS / Provision VMware VM             | Demo/user  | Nov 17, 2015 17:24:39 UTC |  Complete |
+| 627 |              Linux - CentOS / Provision VMware VM             | Demo/user  | Nov 17, 2015 17:19:59 UTC |   Failed  |
+| 620 |                 Create Three Tier Application                 |   admin    | Nov 16, 2015 10:41:03 UTC |  Complete |
+| 619 |                 Create Three Tier Application                 |   admin    | Nov 16, 2015 10:39:15 UTC |   Failed  |
+| 618 |          Rollback Partner Create Tenant Demo (SR 615)         |   admin    | Nov 16, 2015 10:33:26 UTC |  Complete |
+| 617 |          Rollback Partner Create Tenant Demo (SR 614)         |   admin    | Nov 16, 2015 10:32:49 UTC |  Complete |
+| 616 |     Create ACI Tenant and Network / ACI Tenent and Network    | Demo/user  | Nov 16, 2015 10:31:18 UTC |  Complete |
+| 615 |                   Partner Create Tenant Demo                  |   admin    | Nov 16, 2015 10:20:14 UTC |  Complete |
+| 614 |                   Partner Create Tenant Demo                  |   admin    | Nov 16, 2015 10:18:02 UTC |  Complete |
+| 613 |        Rollback Create Three Tier Application (SR 607)        |   admin    | Nov 16, 2015 09:49:39 UTC |  Complete |
+| 607 |                 Create Three Tier Application                 |   admin    | Nov 16, 2015 09:41:47 UTC | Cancelled |
+| 606 |              Linux - CentOS / Provision VMware VM             | Demo/admin | Nov 09, 2015 17:49:11 UTC |  Complete |
+| 605 |                            AD User                            |   admin    | Nov 02, 2015 12:10:11 UTC |   Failed  |
+| 604 |        Rollback Create Three Tier Application (SR 596)        | Demo/admin | Nov 02, 2015 10:51:49 UTC |  Complete |
+| 601 |           Select Storage Tier / Provision VMware VM           | Demo/user  | Nov 02, 2015 10:32:22 UTC |  Complete |
+| 596 | Deploy Three-tier Application / Create Three Tier Application | Demo/user  | Nov 02, 2015 10:27:25 UTC |  Complete |
+| 595 |                       Button - ALter Mem                      | Demo/user  | Nov 02, 2015 10:22:34 UTC |  Complete |
+| 580 |         Dummy WF to test Generate_AD_Create_Powershell        |   admin    | Oct 28, 2015 18:34:14 UTC |  Complete |
+| 574 |             Rollback Provision VMware VM (SR 571)             |   admin    | Oct 28, 2015 18:16:37 UTC | Cancelled |
+| 573 |            Rollback Fenced Container Setup (SR 572)           |   admin    | Oct 28, 2015 18:16:23 UTC |  Complete |
+| 572 |                     Fenced Container Setup                    |   admin    | Oct 28, 2015 12:18:31 UTC |  Complete |
+| 571 |           Select Storage Tier / Provision VMware VM           | Demo/user  | Oct 28, 2015 12:02:53 UTC |  Complete |
++-----+---------------------------------------------------------------+------------+---------------------------+-----------+
+'''
+
+To pull back all the service requests from ICFB;
+'''
+~ cecs list --env icfb                                                                                                                                          
+Listing various things
+https://sandboxicf.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServiceRequests&opData={}
++----+----------+------------+------+--------+
+| ID | Workflow | Group/User | Time | Status |
++----+----------+------------+------+--------+
++----+----------+------------+------+--------+
+'''
