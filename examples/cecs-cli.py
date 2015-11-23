@@ -22,6 +22,8 @@ from prettytable import PrettyTable
 # Initialising the colorama module
 init()
 
+clientVersion = '0.1.dev1'
+
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 @click.group(context_settings=CONTEXT_SETTINGS)
@@ -101,7 +103,15 @@ def order():
 @cli.command()
 def version():
     '''Client & server versions '''
-    click.echo('Both server and client version info')
+    ucsdver = cecs.version('ucsd')
+    icfbver = cecs.version('icfb')
+
+    #click.echo('The version of both server and client')
+    click.echo('-' * 60)
+    click.echo(ucsdver)
+    click.echo(icfbver)
+    click.echo('Script version : ' + clientVersion)
+    click.echo('-' * 60)
 
 @cli.command()
 def order():
