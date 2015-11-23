@@ -14,7 +14,7 @@ Once you have pulled the module down you should browse into the directory and ex
 To use (with caution), simply do::
 
     >>> import cecs
-    >>> print cecs.getsr()
+    >>> print cecs.version(ucsd)
 
 I will at some stage (once it is in a useful state) publish on PyPI to allow much easier installation.
 
@@ -57,7 +57,7 @@ The idea of this script is to create a command line interface to both UCSD & ICF
 
 You should be able to get help by running '''--help''' on the script. A few example outputs are as follows;
 
-'''
+```
 ~ cecs                                                                                                                                                           
 Usage: cecs-cli.py [OPTIONS] COMMAND [ARGS]...
 
@@ -87,7 +87,7 @@ Commands:
   list     This will list a number of things managed by...
   order    Order items
   version  Client & server versions
-'''
+```
 
 Another way to get help.
 '''
