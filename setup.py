@@ -30,12 +30,18 @@ setup(name='cecs',
       author='clijockey',
       author_email='rob.j.edwards@gmail.com',
       license='MIT',
-      packages=['cecs'],
+      packages=find_packages(),
+      include_package_data=True,
       install_requires=[
           'markdown',
           'requests',
           'json',
           'colorama',
+          'click',
       ],
-      include_package_data=True,
+      entry_points={
+        'console_scripts': [
+            'cecs-cli=cecs.bin:cli',
+            ],
+        },
       zip_safe=False)
