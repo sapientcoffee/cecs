@@ -839,3 +839,24 @@ def ImportVDC(env, vdcName):
 
     r = apiCall(env, apioperation, vdcName)
     return r
+
+#################### Systems ###################################################
+#   Some system related info
+################################################################################
+
+def version(env):
+    '''
+    Return the version of the application
+    :param env: The server that requires querying (ucsd or icfb)
+    :return: FQDN: <version number>
+    '''
+
+    apioperation = 'userAPIGetCUICVersion'
+    r = apiCall(env, apioperation)
+    if env == 'ucsd':
+        instance = ucsdserver
+    elif env == 'icfb':
+        instance = icfbserver
+    version = instance + ': ' + r['serviceResult']
+
+    return version
