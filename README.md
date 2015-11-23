@@ -52,6 +52,72 @@ Examples that have been created using this module are as follows, they reside on
 This script provides a text base menu to do display various things. The menu should be self explanatory.
 
 
+```
+~ python ui.py
+
+Welcome, this is an example of using the API for UCS Director and Intercloud Fabric Director
+
+Please choose the menu you want to start:
+1. Catalog Items
+2. Service Requests
+3. Infrastructure
+
+q. Quit
+ >>
+```
+
+```
+ >> 2
+Requests Menu!
+
+1. List all UCSD service requests
+2. List all ICFB service requests
+
+m. Main Menu
+q. Quit
+ Requests >>
+```
+
+```
+Requests >> 1
+Obtaining requested data (this may take a minute) .............
+Please hold the line caller you are important to us.
+All Service Requests!
+
+https://infrastructure.ukidcv.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServiceRequests&opData={}
++-----+---------------------------------------------------------------+------------+---------------------------+-----------+
+| ID  |                            Workflow                           | Group/User |            Time           |   Status  |
++-----+---------------------------------------------------------------+------------+---------------------------+-----------+
+| 629 |              Linux - CentOS / Provision VMware VM             | Demo/user  | Nov 17, 2015 17:27:38 UTC |  Complete |
+| 628 |              Linux - CentOS / Provision VMware VM             | Demo/user  | Nov 17, 2015 17:24:39 UTC |  Complete |
+| 627 |              Linux - CentOS / Provision VMware VM             | Demo/user  | Nov 17, 2015 17:19:59 UTC |   Failed  |
+| 620 |                 Create Three Tier Application                 |   admin    | Nov 16, 2015 10:41:03 UTC |  Complete |
+| 619 |                 Create Three Tier Application                 |   admin    | Nov 16, 2015 10:39:15 UTC |   Failed  |
+| 618 |          Rollback Partner Create Tenant Demo (SR 615)         |   admin    | Nov 16, 2015 10:33:26 UTC |  Complete |
+| 617 |          Rollback Partner Create Tenant Demo (SR 614)         |   admin    | Nov 16, 2015 10:32:49 UTC |  Complete |
+| 616 |     Create ACI Tenant and Network / ACI Tenent and Network    | Demo/user  | Nov 16, 2015 10:31:18 UTC |  Complete |
+| 615 |                   Partner Create Tenant Demo                  |   admin    | Nov 16, 2015 10:20:14 UTC |  Complete |
+| 614 |                   Partner Create Tenant Demo                  |   admin    | Nov 16, 2015 10:18:02 UTC |  Complete |
+| 613 |        Rollback Create Three Tier Application (SR 607)        |   admin    | Nov 16, 2015 09:49:39 UTC |  Complete |
+| 607 |                 Create Three Tier Application                 |   admin    | Nov 16, 2015 09:41:47 UTC | Cancelled |
+| 606 |              Linux - CentOS / Provision VMware VM             | Demo/admin | Nov 09, 2015 17:49:11 UTC |  Complete |
+| 605 |                            AD User                            |   admin    | Nov 02, 2015 12:10:11 UTC |   Failed  |
+| 604 |        Rollback Create Three Tier Application (SR 596)        | Demo/admin | Nov 02, 2015 10:51:49 UTC |  Complete |
+| 601 |           Select Storage Tier / Provision VMware VM           | Demo/user  | Nov 02, 2015 10:32:22 UTC |  Complete |
+| 596 | Deploy Three-tier Application / Create Three Tier Application | Demo/user  | Nov 02, 2015 10:27:25 UTC |  Complete |
+| 595 |                       Button - ALter Mem                      | Demo/user  | Nov 02, 2015 10:22:34 UTC |  Complete |
+| 580 |         Dummy WF to test Generate_AD_Create_Powershell        |   admin    | Oct 28, 2015 18:34:14 UTC |  Complete |
+| 574 |             Rollback Provision VMware VM (SR 571)             |   admin    | Oct 28, 2015 18:16:37 UTC | Cancelled |
+| 573 |            Rollback Fenced Container Setup (SR 572)           |   admin    | Oct 28, 2015 18:16:23 UTC |  Complete |
+| 572 |                     Fenced Container Setup                    |   admin    | Oct 28, 2015 12:18:31 UTC |  Complete |
+| 571 |           Select Storage Tier / Provision VMware VM           | Demo/user  | Oct 28, 2015 12:02:53 UTC |  Complete |
++-----+---------------------------------------------------------------+------------+---------------------------+-----------+
+
+b. Back
+q. Quit
+ Requests >>
+```
+
 #### cecs-cli.py
 The idea of this script is to create a command line interface to both UCSD & ICFB. At the moment I havnt got the 'setuptools' working correctly to allow this to run as a true CLI. You can however run the script using ```python cecs-cli.py``` or make the file executable. As a hack I have created an alias to it using cecs (which will be what I use when I work out 'entry_points' on 'setuptools').
 
@@ -182,3 +248,5 @@ https://sandboxicf.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServi
 +----+----------+------------+------+--------+
 +----+----------+------------+------+--------+
 ```
+#### cecs-cli.py
+This is just my scratch pad (test area) until I get unittest setup and run some automated checks. I also use it when working out new things. 
