@@ -2,7 +2,7 @@
 
 This is my first attempt at creating a Python Module and is intended to assist with using the Cisco Enterprise Cloud Suite APIs. The initial work will be around UCS Director.
 
-This have been inspired and influenced by https://github.com/hpreston/cisco_cloud. I initially intended to contribute to Hanks good work however as a learning exercise I wanted to create my own module and learn how to use unit testing for it.
+This has been inspired and influenced by https://github.com/hpreston/cisco_cloud. I initially intended to contribute to Hanks good work however as a learning exercise I wanted to create my own module and learn how to package and use unit testing for it.
 
 This is still a work in progress project and is evolving when I get time to work on it, if you would like to assist with the development please reach out to me or make pull requests etc.
 
@@ -10,13 +10,14 @@ Once you have pulled the module down you should browse into the directory and ex
 
     python setup.py install
 
+You will then need to update ```local_config.py``` file to insert the location of your UCSD/ICFB servers as well as the API key. A future release will incorporate this into a setup script to make life easier and place the config in your ~ directory. 
 
-To use (with caution), simply do::
+To test, simply obtain the version of UCSD (or ICFB):
 
     >>> import cecs
     >>> print cecs.version(ucsd)
 
-I will at some stage (once it is in a useful state) publish on PyPI to allow much easier installation.
+I will at some stage (once it is in a useful state) publish on PyPI to allow much easier installation (this is half done but has sum bits to work out).
 
 Do you want or need an environment to test against? Well the good news for ICFB is that Cisco DevNet have made a sandbox avaialble. To get more information go to my [blog](http://clijockey.com/intercloud-fabric-api/).
 
