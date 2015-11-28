@@ -10,7 +10,17 @@ Once you have pulled the module down you should browse into the directory and ex
 
     python setup.py install
 
-You will then need to update ```local_config.py``` file to insert the location of your UCSD/ICFB servers as well as the API key. A future release will incorporate this into a setup script to make life easier and place the config in your ~ directory. 
+Once that has completed you will need to configure your UCSD/ICFB hostnames and API key to allow your scripts to communicate with the servers. The CECS module will look for the file ```~/.cecs.cfg``` which will contained the required.
+
+```
+[UCSD]
+apikey = 4522D0E068144D66666B15F2F1D8FD2A
+hostname = ucsd.domain.com
+[ICFB]
+apikey = 6B75494C86E0416666AA390A98033922
+hostname = ucsd.domain.com
+```
+You can either create the file and populate yourself or run the script ```obtain_credentials.py``` which is located in the cecs folder. The aim of this script is to make setting up your system much easier, however at the moment the step to pull back you API key automatically isn't working as expected. 
 
 To test, simply obtain the version of UCSD (or ICFB):
 
