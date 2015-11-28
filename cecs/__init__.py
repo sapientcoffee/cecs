@@ -6,8 +6,8 @@
 #                       UCSD & ICFB APIs for other Pyton scripts.
 #
 # Author:          		Rob Edwards (robedwa)
-# Date:                 30/09/15
-# Version:              0.1.10
+# Date:                 28/11/15
+# Version:              0.1.12
 # Dependencies:
 # Limitations/issues:   Early days of the module
 #==============================================================================
@@ -17,13 +17,37 @@
 '''
 import requests
 import json
-
+from configobj import ConfigObj
 from markdown import markdown
+from os.path import expanduser
 #from pprint import pprint
 
+__version__ = '0.1.12'
+Version = __version__  # for backware compatibility
+
+
 # import standard variables and configuration info
-from local_config import ucsdserver, ucsd_key, url, getstring, parameter_lead, headers, icfbserver, icfb_key
+#from local_config import ucsdserver, ucsd_key, url, getstring, parameter_lead, headers, icfbserver, icfb_key
 # headers["X-Cloupia-Request-Key"] = ucsd_key
+
+home = expanduser('~')
+filename = home + '/.cecs.cfg'
+#settings = home + filename
+
+config = ConfigObj(filename)
+ucsd_section = config['UCSD']
+icfb_section = config['ICFB']
+
+# Setting a number of things
+ucsdserver = ucsd_section['hostname']
+ucsd_key = ucsd_section['apikey']
+icfbserver = icfb_section['hostname']
+icfb_key = icfb_section['apikey']
+url = "https://%s/app/api/rest?"
+getstring = "formatType=json&opName=%s"
+parameter_lead = "&opData="
+headers = {"X-Cloupia-Request-Key":" "}
+
 
 # Being lazy and avoiding checking the SSL cert and as a result want to hide the erros associated :)
 requests.packages.urllib3.disable_warnings()
@@ -121,6 +145,8 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
     elif env == 'ucsd':
         headers["X-Cloupia-Request-Key"] = ucsd_key
         server = ucsdserver
+    else:
+        server = env
 
     if param0 is None:
         u = url % (server) + getstring % (api) + parameter_lead + \
@@ -148,7 +174,10 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
     # in a production environemnt I would sugest changing verify to True so that the
     # SSL certs are validated!!
     print u
-    r = requests.get(u, headers=headers, verify=False)
+    if (env == 'ucsd') or (env == 'icfb'):
+        r = requests.get(u, headers=headers,verify=False)
+    else:
+        r = requests.get(u, verify=False)
     j = json.loads(r.text)
     return j
 
@@ -860,3 +889,14 @@ def version(env):
     version = instance + ': ' + r['serviceResult']
 
     return version
+
+def obtain_apikey(env, username, password):
+    '''
+    Return the API Key
+    :param :
+    :return:
+    '''
+    #apioperation = 'getRESTKey'
+    apioperation = 'userAPIGetRESTAccessKey'
+    r = apiCall(env, apioperation, username, password)
+    return r
