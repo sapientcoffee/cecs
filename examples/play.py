@@ -4,7 +4,7 @@
 # Title:
 # Description:          This is just a file I use for testing fuctions
 #
-# Author:          		Rob Edwards (robedwa)
+# Author:          		Rob Edwards (@clijockey)
 # Date:
 # Version:
 # Dependencies:
@@ -14,9 +14,46 @@ import requests
 import json
 import cecs
 from prettytable import PrettyTable
+import os
 
 import sys
 from pprint import pprint
+from configobj import ConfigObj
+from os.path import expanduser
+
+home = expanduser('~')
+filename = home + '/.cecs.cfg'
+#settings = home + filename
+
+config = ConfigObj(filename)
+
+ucsd_section = config['UCSD']
+print ucsd_section['hostname']
+print ucsd_section['apikey']
+
+
+# from configobj import ConfigObj
+# from os.path import expanduser
+# home = expanduser('~')
+# filename = '/.cecs.cfg'
+# settings = home + filename
+#
+# # Check to see if config file exists in home directory. At some stage
+# # it will check home dir first then check a systems wide location
+# # of /etc/cecs.cfg
+# try:
+#     with open(settings) as file:
+#         print('found file')
+#         config = ConfigObj(settings)
+#         #print config
+#         pass
+# except IOError as e:
+#     print "Unable to open file" #Does not exist OR no read permissions
+
+
+#print cecs.obtain_apikey('infrastructure.ukidcv.cisco.com', 'admin', 'admin')
+
+
 
 
 #
@@ -234,32 +271,35 @@ DEFAULT = '\033[39m'
 #pprint(getCat)
 
 ### Cloud Operations
-values = "{\
-\"vdcName\":\"customerTest\",\
-\"vdcDescription\":\"customerTest\",\
-\"cloudName\":\"VMWare Development\",\
-\"groupName\":\"1\",\
-\"approver1\":\"null\",\
-\"approver2\":\"null\",\
-\"vdcSupportEmail\":\"name@company.com\",\
-\"vdcCustomerNoticationEmail\":\"name@company.com\",\
-\"systemPolicy\":\"null\",\
-\"deploymentPolicy\":\"default-d\",\
-\"slaPolicy\":\"null\",\
-\"computingPolicy\":\"default\",\
-\"storagePolicy\":\"default\",\
-\"networkPolicy\":\"default\",\
-\"costModel\":\"DefaultCostModel\",\
-\"isLocked\":\"false\",\
-\"isDeletable\":\"false\",\
-\"isSelfServicePowerMgmt\":\"false\",\
-\"isSelfServiceResize\":\"false\",\
-\"isSelfServiceDeleteVM\":\"false\",\
-\"isSelfServiceSnapshotMgmt\":\"false\",\
-\"inactivityPeriodForDeletion\":\"-1\"}"
+# values = "{\
+# \"vdcName\":\"customerTest\",\
+# \"vdcDescription\":\"customerTest\",\
+# \"cloudName\":\"VMWare Development\",\
+# \"groupName\":\"1\",\
+# \"approver1\":\"null\",\
+# \"approver2\":\"null\",\
+# \"vdcSupportEmail\":\"name@company.com\",\
+# \"vdcCustomerNoticationEmail\":\"name@company.com\",\
+# \"systemPolicy\":\"null\",\
+# \"deploymentPolicy\":\"default-d\",\
+# \"slaPolicy\":\"null\",\
+# \"computingPolicy\":\"default\",\
+# \"storagePolicy\":\"default\",\
+# \"networkPolicy\":\"default\",\
+# \"costModel\":\"DefaultCostModel\",\
+# \"isLocked\":\"false\",\
+# \"isDeletable\":\"false\",\
+# \"isSelfServicePowerMgmt\":\"false\",\
+# \"isSelfServiceResize\":\"false\",\
+# \"isSelfServiceDeleteVM\":\"false\",\
+# \"isSelfServiceSnapshotMgmt\":\"false\",\
+# \"inactivityPeriodForDeletion\":\"-1\"}"
+#
+# #values[2:]
+#
+# #print(values)
+# get = cecs.CreateVDC("ucsd", values)
+# pprint(get)
 
-#values[2:]
-
-#print(values)
-get = cecs.CreateVDC("ucsd", values)
-pprint(get)
+# get = cecs.sr_get("icfb")
+# print(get)
