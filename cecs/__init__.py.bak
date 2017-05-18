@@ -173,7 +173,7 @@ def apiCall(env, api, param0 = None, param1 = None, param2 = None, param3 = None
     # Due to the setup of the lab I have disabled the SSL cert verification however
     # in a production environemnt I would sugest changing verify to True so that the
     # SSL certs are validated!!
-    print(u)
+    print u
     if (env == 'ucsd') or (env == 'icfb'):
         r = requests.get(u, headers=headers,verify=False)
     else:
@@ -467,7 +467,7 @@ def getAllVMs(env):
     #apioperation = "Intercloud:userAPIGetAllVMs"
     #apioperation = "userAPIGetAllVMs"
     #env = "ucsd"
-    print(("About to call in getAllVMs " + env + " using " + apioperation ))
+    print("About to call in getAllVMs " + env + " using " + apioperation )
     r = apiCall(env, apioperation)
     #r = ucsdCall(apioperation)
     #j = json.loads(r.text)
@@ -486,7 +486,7 @@ def VMNameToID(env, vm_name):
     elif env == "icfb":
         apioperation = "Intercloud:userAPIGetAllVms"
 
-    print(("About to call in VMnameToID " + env + " using " + apioperation))
+    print("About to call in VMnameToID " + env + " using " + apioperation)
     r = apiCall(env, apioperation)
 
     all_vms = r['serviceResult']['rows']
@@ -520,7 +520,7 @@ def vm_action(env, vm_name, action, comment):
     # Need to work out some logic that if it exisst on both ICF and UCSD (as could be powered on on prem post migration).
     print("Working out the vmid")
     vmid = VMNameToID(env, vm_name)
-    print(("The vmid is" + str(vmid)))
+    print("The vmid is" + str(vmid))
     if env == "ucsd":
         #print("UCSD env selected")
     # If UCSD follow the following
@@ -565,7 +565,7 @@ def vm_action(env, vm_name, action, comment):
     else:
         r = "Error, VM not found"
 
-    print("About to " + action + " the VM '" + vm_name + "' with VM_ID '" +str(vmid)+ "' .")
+    print "About to " + action + " the VM '" + vm_name + "' with VM_ID '" +str(vmid)+ "' ."
     #env = "icfb"
     r = apiCall(env, apioperation, str(vmid), action, comment)
 
@@ -826,7 +826,7 @@ def CreateVDC(env, APIVDCDetails):
 
     values = str(APIVDCDetails)
 
-    print(values)
+    print values
     r = apiCall(env, apioperation, values)
     return r
 
