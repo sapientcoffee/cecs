@@ -28,8 +28,8 @@ filename = home + '/.cecs.cfg'
 config = ConfigObj(filename)
 
 ucsd_section = config['UCSD']
-print(ucsd_section['hostname'])
-print(ucsd_section['apikey'])
+print ucsd_section['hostname']
+print ucsd_section['apikey']
 
 
 # from configobj import ConfigObj

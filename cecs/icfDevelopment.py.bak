@@ -48,7 +48,7 @@ def list_search(list, result_filter):
     if (len(result_filter) == 0): return list
     new_list = []
     for l in list:
-        for key in list(result_filter.keys()):
+        for key in result_filter.keys():
             if (l[key] == result_filter[key]):
                 new_list.append(l)
                 break

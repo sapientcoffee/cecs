@@ -37,22 +37,22 @@ DEFAULT = '\033[39m'
 #     MENUS FUNCTIONS
 # =======================
 def common_options():
-    print("m. Main")
-    print("q. Quit")
-    choice = input(" Option >>  ")
+    print "m. Main"
+    print "q. Quit"
+    choice = raw_input(" Option >>  ")
     main_exec_menu(choice)
     return
 
 def main_menu():
     os.system('clear')
-    print("Welcome, this is an example of using the API for UCS Director and Intercloud Fabric Director\n")
-    print("Please choose the menu you want to start:")
-    print("1. Catalog Items")
-    print("2. Service Requests")
-    print("3. Infrastructure")
+    print "Welcome, this is an example of using the API for UCS Director and Intercloud Fabric Director\n"
+    print "Please choose the menu you want to start:"
+    print "1. Catalog Items"
+    print "2. Service Requests"
+    print "3. Infrastructure"
     #print "4. Consuption"
-    print("\nq. Quit")
-    choice = input(" >>  ")
+    print "\nq. Quit"
+    choice = raw_input(" >>  ")
     main_exec_menu(choice)
     return
 
@@ -68,12 +68,12 @@ def catalog_menu():
 
 #################### Service Request Menu ######################################
 def requests_menu():
-    print("Requests Menu!\n")
-    print("1. List all UCSD service requests")
-    print("2. List all ICFB service requests")
-    print("\nm. Main Menu")
-    print("q. Quit")
-    choice = input(" Requests >>  ")
+    print "Requests Menu!\n"
+    print "1. List all UCSD service requests"
+    print "2. List all ICFB service requests"
+    print "\nm. Main Menu"
+    print "q. Quit"
+    choice = raw_input(" Requests >>  ")
     requests_exec_menu(choice)
     #common_options()
     return
@@ -108,7 +108,7 @@ def request_list(env):
     print(srtable)
     print("\nb. Back")
     print("q. Quit")
-    choice = input(" Requests >>  ")
+    choice = raw_input(" Requests >>  ")
     requests_exec_menu(choice)
     return
     #common_options()
@@ -119,20 +119,20 @@ def request_list(env):
 def request_list_ucsd():
     print("Obtaining requested data (this may take a minute) .............")
     print("Please hold the line caller you are important to us.")
-    print((request_list("ucsd")))
+    print(request_list("ucsd"))
     print("\nb. Back")
     print("q. Quit")
-    choice = input(" Requests >>  ")
+    choice = raw_input(" Requests >>  ")
     infra_exec_menu(choice)
     return
 
 def request_list_icfb():
     print("Obtaining requested data (this may take a minute) .............")
     print("Please hold the line caller you are important to us.")
-    print((request_list("icfb")))
+    print(request_list("icfb"))
     print("\nb. Back")
     print("q. Quit")
-    choice = input(" Requests >>  ")
+    choice = raw_input(" Requests >>  ")
     infra_exec_menu(choice)
     return
 
@@ -141,9 +141,9 @@ def infra_menu():
     print("Infrastructure Menu!\n")
     print("1. List UCSD Virtual Machines")
     print("2. List ICFB Virtual Machines")
-    print("\n m. Main Menu")
-    print("q. Quit")
-    choice = input(" Option >>  ")
+    print "\n m. Main Menu"
+    print "q. Quit"
+    choice = raw_input(" Option >>  ")
     infra_exec_menu(choice)
     return
 
@@ -180,25 +180,25 @@ def vm_list(env):
 def vm_list_ucsd():
     print("Obtaining requested data (this may take a minute) .............")
     print("Please hold the line caller you are important to us.")
-    print((vm_list("ucsd")))
+    print(vm_list("ucsd"))
     print("\nb. Back")
     print("q. Quit")
-    choice = input(" Infrastructure >>  ")
+    choice = raw_input(" Infrastructure >>  ")
     infra_exec_menu(choice)
     return
 
 def vm_list_icfb():
     print("Obtaining requested data (this may take a minute) .............")
     print("Please hold the line caller you are important to us.")
-    print((vm_list("icfb")))
+    print(vm_list("icfb"))
     print("b. Back")
     print("q. Quit")
-    choice = input(" Infrastructure >>  ")
+    choice = raw_input(" Infrastructure >>  ")
     infra_exec_menu(choice)
     return
 #################### Consuption/Billing Menu ###################################
 def consumption_menu():
-    print("Consuption Menu!\n")
+    print "Consuption Menu!\n"
     # print "b. Back"
     # print "q. Quit"
     # choice = raw_input(" Consumption >>  ")
@@ -227,7 +227,7 @@ def main_exec_menu(choice):
         try:
             main_menu_actions[ch]()
         except KeyError:
-            print("Invalid selection, please try again.\n")
+            print "Invalid selection, please try again.\n"
             main_menu_actions['main_menu']()
     return
 
@@ -240,7 +240,7 @@ def requests_exec_menu(choice):
             try:
                 requests_menu_actions[ch]()
             except KeyError:
-                print("Invalid selection, please try again.\n")
+                print "Invalid selection, please try again.\n"
                 requests_menu_actions['main_menu']()
         return
 
@@ -253,7 +253,7 @@ def infra_exec_menu(choice):
         try:
             infra_menu_actions[ch]()
         except KeyError:
-            print("Invalid selection, please try again.\n")
+            print "Invalid selection, please try again.\n"
             infra_menu_actions['main_menu']()
     return
 
